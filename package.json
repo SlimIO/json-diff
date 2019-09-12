@@ -22,7 +22,9 @@
         "url": "https://github.com/SlimIO/json-diff/issues"
     },
     "homepage": "https://github.com/SlimIO/json-diff#readme",
-    "dependencies": {},
+    "dependencies": {
+        "fast-diff": "^1.2.0"
+    },
     "devDependencies": {
         "@commitlint/cli": "^8.1.0",
         "@commitlint/config-conventional": "^8.1.0",
