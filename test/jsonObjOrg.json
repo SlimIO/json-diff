@@ -1,0 +1,12 @@
+{
+    "number": 10,
+    "arrayNumber": [10, 20, 30],
+    "string": "Hello world",
+    "arrayString": [
+        "Hello world",
+        "Bonjour"
+    ],
+    "obj": {
+        
+    }
+}
