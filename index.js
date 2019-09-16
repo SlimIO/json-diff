@@ -11,13 +11,18 @@ const fastDiff = require("fast-diff");
  * @returns {object}
  */
 function jsonDiff(original, diff, options = Object.create(null)) {
-    console.log(typeof original);
-    console.log(typeof diff);
-    console.log(typeof original === typeof diff);
+    // console.log(typeof original);
+    // console.log(typeof diff);
+    // console.log(typeof original === typeof diff);
     if (typeof original === typeof diff) {
-        console.log("objDiff");
+        // const diff = {};
 
-        return { type: "object", diff: [...objDiff(original, diff)] };
+        const result = {};
+        for (const { key, type, code, value } of [...objDiff(original, diff)]) {
+            Reflect.set(result, key, { type, code, value });
+        }
+
+        return { type: "object", result };
     }
 
     return null;
@@ -32,53 +37,53 @@ function jsonDiff(original, diff, options = Object.create(null)) {
 function* objDiff(obj1, obj2, options = Object.create(null)) {
     const obj1Keys = Object.keys(obj1);
     const obj2Keys = Object.keys(obj2);
-    const deletedKeys = [];
-    const addedKeys = [];
 
     for (const key of obj1Keys) {
+        const obj1Value = obj1[key];
+
         if (!obj2Keys.includes(key)) {
-            yield { key, value: obj1[key] };
+            yield { key, type: typeof obj1Value, code: -1, value: obj1Value };
             continue;
         }
 
-        const obj1Value = obj1[key];
         const obj2Value = obj2[key];
-        console.log(key);
-        console.log(obj2Keys.includes(key));
         if (typeof obj1Value !== typeof obj2Value) {
-            yield { key, value: { oldVal: obj1Value, newVal: obj2Value } };
+            yield { key, code: 1, type: typeof obj2Value, value: { oldVal: obj1Value, newVal: obj2Value } };
+            const index = obj2Keys.indexOf(key);
+            obj2Keys.splice(index, 1);
             continue;
         }
         switch (typeof obj1Value) {
             case "object":
-                console.log("object !");
-                yield { key, value: objDiff(obj1Value, obj2Value) };
-                break;
-            case "array":
-                console.log("array !");
-                yield { key, value: arrayDiff(obj1Value, obj2Value) };
+                // console.log("object !");
+                if (Array.isArray(obj1Value)) {
+                    console.log("array !");
+                    yield { key, type: "array", code: 0, value: [...arrayDiff(obj1Value, obj2Value)] };
+                    break;
+                }
+        
+                /* eslint-disable-next-line */
+                const newObj = {};
+                for (const { key, type, code, value } of [...objDiff(obj1Value, obj2Value)]) {
+                    Reflect.set(newObj, key, { type, code, value });
+                }
+                yield { key, code: 0, type: "object", value: newObj };
                 break;
             default:
-                console.log("primitives !");
-                yield { key, value: primitiveDiff(obj1Value, obj2Value) };
+                // console.log("primitives !");
+                /* eslint-disable-next-line */
+                const { code, type, value } = primitiveDiff(obj1Value, obj2Value);
+                yield { key, type, code, value };
         }
+        const index = obj2Keys.indexOf(key);
+        obj2Keys.splice(index, 1);
+        // console.log(obj2Keys);
+    }
+
+    for (const key of obj2Keys) {
+        yield { key, type: typeof obj2[key], code: 1, value: obj2[key] };
     }
 }
-
-/**
- *
- * @param {number} number1 number1
- * @param {number} number2 number2
- * @param {object} options options
- * @returns {object}
- */
-// function numberDiff(number1, number2, options = Object.create(null)) {
-//     if (number1 === number2) {
-//         return { code: 0, value: number1 };
-//     }
-
-//     return { code: -1, value: { old: number1, new: number2 } };
-// }
 
 /**
  *
@@ -89,10 +94,10 @@ function* objDiff(obj1, obj2, options = Object.create(null)) {
  */
 function primitiveDiff(primitive1, primitive2, options = Object.create(null)) {
     if (primitive1 === primitive2) {
-        return primitive1;
+        return { code: 0, type: typeof primitive1, value: primitive1 };
     }
 
-    return { oldVal: primitive1, newVal: primitive2 };
+    return { code: 1, type: typeof primitive1, value: { oldVal: primitive1, newVal: primitive2 } };
 }
 
 /**
@@ -101,8 +106,21 @@ function primitiveDiff(primitive1, primitive2, options = Object.create(null)) {
  * @param {Array} arr2 arr2
  * @param {object} options options
  */
-function arrayDiff (arr1, arr2, options = Object.create(null)) {
+function* arrayDiff(arr1, arr2, options = Object.create(null)) {
+    for (const item of arr1) {
+        if (arr2.includes(item)) {
+            yield { code: 0, type: typeof item, value: item };
+            const index = arr2.indexOf(item);
+            arr2.splice(index, 1);
+            continue;
+        }
 
+        yield { code: -1, type: typeof item, value: item };
+    }
+
+    for (const item of arr2) {
+        yield { code: 1, type: typeof item, value: item };
+    }
 }
 
-module.exports = jsonDiff; 
+module.exports = jsonDiff;

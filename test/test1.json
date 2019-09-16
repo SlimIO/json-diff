@@ -1,0 +1,14 @@
+{
+    "number0": 1, 
+    "number1": 10,
+    "number2": 20,
+    "number3": "test",
+    "number5": {
+        "foo": "baz",
+        "fizz": "buzz",
+        "baz": "biz"
+    },
+    "arr": [
+        "x", "y" , "z"
+    ]
+}
