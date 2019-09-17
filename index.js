@@ -11,12 +11,7 @@ const fastDiff = require("fast-diff");
  * @returns {object}
  */
 function jsonDiff(original, diff, options = Object.create(null)) {
-    // console.log(typeof original);
-    // console.log(typeof diff);
-    // console.log(typeof original === typeof diff);
     if (typeof original === typeof diff) {
-        // const diff = {};
-
         const result = {};
         for (const { key, type, code, value } of [...objDiff(original, diff)]) {
             Reflect.set(result, key, { type, code, value });
@@ -48,20 +43,19 @@ function* objDiff(obj1, obj2, options = Object.create(null)) {
 
         const obj2Value = obj2[key];
         if (typeof obj1Value !== typeof obj2Value) {
-            yield { key, code: 1, type: typeof obj2Value, value: { oldVal: obj1Value, newVal: obj2Value } };
+            // rework
+            yield { key, code: 1, type: "mixed", value: { oldVal: obj1Value, newVal: obj2Value } };
             const index = obj2Keys.indexOf(key);
             obj2Keys.splice(index, 1);
             continue;
         }
         switch (typeof obj1Value) {
             case "object":
-                // console.log("object !");
                 if (Array.isArray(obj1Value)) {
-                    console.log("array !");
                     yield { key, type: "array", code: 0, value: [...arrayDiff(obj1Value, obj2Value)] };
                     break;
                 }
-        
+
                 /* eslint-disable-next-line */
                 const newObj = {};
                 for (const { key, type, code, value } of [...objDiff(obj1Value, obj2Value)]) {
@@ -70,14 +64,12 @@ function* objDiff(obj1, obj2, options = Object.create(null)) {
                 yield { key, code: 0, type: "object", value: newObj };
                 break;
             default:
-                // console.log("primitives !");
                 /* eslint-disable-next-line */
                 const { code, type, value } = primitiveDiff(obj1Value, obj2Value);
                 yield { key, type, code, value };
         }
         const index = obj2Keys.indexOf(key);
         obj2Keys.splice(index, 1);
-        // console.log(obj2Keys);
     }
 
     for (const key of obj2Keys) {
