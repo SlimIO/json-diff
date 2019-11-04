@@ -3,7 +3,6 @@
 const jsonDiff = require("../index.js");
 const { readFile } = require("fs").promises;
 const { red, green } = require("kleur");
-const fastDiff = require("fast-diff");
 
 const INDENT = 4;
 

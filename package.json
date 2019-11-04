@@ -23,7 +23,6 @@
     },
     "homepage": "https://github.com/SlimIO/json-diff#readme",
     "dependencies": {
-        "fast-diff": "^1.2.0",
         "kleur": "^3.0.3"
     },
     "devDependencies": {

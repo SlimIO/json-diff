@@ -1,8 +1,5 @@
 "use strict";
 
-const fastDiff = require("fast-diff");
-
-
 /**
  * @function jsonDiff
  * @param {string} original original JSON
