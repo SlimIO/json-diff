@@ -4,7 +4,7 @@ const fastDiff = require("fast-diff");
 
 
 /**
- *
+ * @function jsonDiff
  * @param {string} original original JSON
  * @param {string} diff diff JSON
  * @param {object} options options
@@ -24,10 +24,11 @@ function jsonDiff(original, diff, options = Object.create(null)) {
 }
 
 /**
- *
- * @param {*} obj1 obj1
- * @param {*} obj2 obj2
- * @param {*} options options
+ * @generator objDiff
+ * @param {object} obj1 obj1
+ * @param {object} obj2 obj2
+ * @param {object} options options
+ * @yields {object}
  */
 function* objDiff(obj1, obj2, options = Object.create(null)) {
     const obj1Keys = Object.keys(obj1);
@@ -78,7 +79,7 @@ function* objDiff(obj1, obj2, options = Object.create(null)) {
 }
 
 /**
- *
+ * @function primitiveDiff
  * @param {number|string|boolean} primitive1 primitive1
  * @param {number|string|boolean} primitive2 primitive2
  * @param {object} options options
@@ -93,10 +94,11 @@ function primitiveDiff(primitive1, primitive2, options = Object.create(null)) {
 }
 
 /**
- *
+ * @generator arrayDiff
  * @param {Array} arr1 arr1
  * @param {Array} arr2 arr2
  * @param {object} options options
+ * @yields {object}
  */
 function* arrayDiff(arr1, arr2, options = Object.create(null)) {
     for (const item of arr1) {
