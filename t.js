@@ -6,13 +6,15 @@ const { red, green } = require("kleur");
 
 const INDENT = 4;
 
-
 /**
- *
+ * @function colorObj
  * @param {object} obj obj
  * @param {number} indent indent
  */
 function colorObj(obj, indent = 1) {
+    if (indent === 1) {
+        console.log("{");
+    }
     const [lastKey] = Object.entries(obj).pop();
     for (const [key, { code, type, value }] of Object.entries(obj)) {
         // console.log(lastKey);
@@ -30,7 +32,7 @@ function colorObj(obj, indent = 1) {
                 break;
             default:
                 if (typeof type === "object") {
-                    
+                    // TBC
                     break;
                 }
                 if (typeof value === "object") {
@@ -43,10 +45,13 @@ function colorObj(obj, indent = 1) {
                 getLine(code, type, value, { key, indent, comma });
         }
     }
+    if (indent === 1) {
+        console.log("}");
+    }
 }
 
 /**
- *
+ * @function colorArray
  * @param {Array} arr arr
  * @param {number} indent indent
  */
@@ -58,7 +63,7 @@ function colorArray(arr, indent = 1) {
 }
 
 /**
- *
+ * @function getLine
  * @param {number} indent indent
  * @param {number} code code
  * @param {string} type type
@@ -116,12 +121,12 @@ async function main() {
 
     console.log(JSON.stringify(result, null, 4));
 
-    if (type === "object") {
-        console.log("{");
-    }
+    // if (type === "object") {
+    //     console.log("{");
+    // }
     colorObj(result);
-    if (type === "object") {
-        console.log("}");
-    }
+    // if (type === "object") {
+    //     console.log("}");
+    // }
 }
 main().catch(console.error);
