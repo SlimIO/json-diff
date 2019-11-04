@@ -1,6 +1,6 @@
 "use strict";
 
-const jsonDiff = require("../index.js");
+const jsonDiff = require("./index.js");
 const { readFile } = require("fs").promises;
 const { red, green } = require("kleur");
 
