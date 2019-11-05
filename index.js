@@ -1,23 +1,31 @@
 "use strict";
 
+const colorObj = require("./src/color.js");
+
 /**
  * @function jsonDiff
  * @param {string} original original JSON
  * @param {string} diff diff JSON
  * @param {object} options options
- * @returns {object}
+ * @returns {object|void}
  */
 function jsonDiff(original, diff, options = Object.create(null)) {
+    const { color = true } = options;
     if (typeof original === typeof diff) {
         const result = {};
         for (const { key, type, code, value } of [...objDiff(original, diff)]) {
             Reflect.set(result, key, { type, code, value });
         }
+        if (color === true) {
+            colorObj(result);
+
+            return void 0;
+        }
 
         return { type: "object", result };
     }
 
-    return null;
+    return void 0;
 }
 
 /**
