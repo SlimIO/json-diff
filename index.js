@@ -8,24 +8,26 @@ const colorObj = require("./src/color.js");
  * @param {string} diff diff JSON
  * @param {object} options options
  * @returns {object|void}
+ * @throws {TypeError}
  */
 function jsonDiff(original, diff, options = Object.create(null)) {
     const { color = true } = options;
-    if (typeof original === typeof diff) {
-        const result = {};
-        for (const { key, type, code, value } of [...objDiff(original, diff)]) {
-            Reflect.set(result, key, { type, code, value });
-        }
-        if (color === true) {
-            colorObj(result);
 
-            return void 0;
-        }
-
-        return { type: "object", result };
+    if (typeof original !== typeof diff) {
+        throw new TypeError("The 2 json you try to compare don't are the same typeof");
     }
 
-    return void 0;
+    const result = {};
+    for (const { key, type, code, value } of [...objDiff(original, diff)]) {
+        Reflect.set(result, key, { type, code, value });
+    }
+    if (color === true) {
+        colorObj(result);
+
+        return void 0;
+    }
+
+    return { type: "object", result };
 }
 
 /**
