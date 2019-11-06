@@ -3,7 +3,7 @@
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/SlimIO/is/commit-activity)
 ![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)
 
-
+Differentiates JSON in you terminal with color.
 
 ## Requirements
 - [Node.js](https://nodejs.org/en/) v10 or higher
@@ -20,13 +20,34 @@ $ yarn add @slimio/json-diff
 
 
 ## Usage example
-TBC
+```js
+const jsonDiff = require("@slimio/json-diff");
+const json1 = {
+    number: 10,
+    array: ["x", "y", "z"]
+}
+
+const json2 = {
+    number: 20,
+    array: ["x", "y", "w"]
+}
+
+jsonDiff(json1, json2);
+```
+It will produce the following stdout:
+
+![stdout](https://i.imgur.com/uVqCnqE.png)
 
 ## API
-TBC
+
+### jsonDiff(original: object, diff: object): void
+Stdout the difference between two JSON Object.
 
 ## Dependencies
-This project have no dependencies.
+
+|Name|Refactoring|Security Risk|Usage|
+|---|---|---|---|
+|[kleur](https://github.com/lukeed/kleur)|Minor|Low|TTY color|
 
 ## License
 MIT
