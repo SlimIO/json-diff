@@ -6,7 +6,7 @@
 Differentiates JSON in you terminal with color.
 
 ## Requirements
-- [Node.js](https://nodejs.org/en/) v10 or higher
+- [Node.js](https://nodejs.org/en/) v12 or higher
 
 ## Getting Started
 

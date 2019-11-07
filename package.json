@@ -1,7 +1,7 @@
 {
     "name": "@slimio/json-diff",
     "version": "0.1.0",
-    "description": "",
+    "description": "Stdout difference from two JS Objects in the TTY",
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
@@ -15,7 +15,17 @@
         "type": "git",
         "url": "git+https://github.com/SlimIO/json-diff.git"
     },
-    "keywords": [],
+    "files": [
+        "src"
+    ],
+    "keywords": [
+        "json",
+        "object",
+        "diff",
+        "difference",
+        "tty",
+        "stdout"
+    ],
     "author": "SlimIO",
     "license": "MIT",
     "bugs": {
@@ -40,11 +50,11 @@
         "pkg-ok": "^2.3.1"
     },
     "engines": {
-        "node": ">=10"
+        "node": ">=12"
     },
     "husky": {
         "hooks": {
-            "pre-push": "npm test",
+            "pre-push": "cross-env eslint index.js src/color.js && npm test",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
     },
