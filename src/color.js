@@ -1,13 +1,16 @@
 "use strict";
 
+// Require Third-party Dependencies
 const { red, green } = require("kleur");
 
+// CONSTANTS
 const INDENT = 4;
 
 /**
  * @function colorObj
  * @param {object} obj obj
- * @param {number} indent indent
+ * @param {number} [indent=1] indent
+ * @returns {void}
  */
 function colorObj(obj, indent = 1) {
     if (indent === 1) {
@@ -72,24 +75,28 @@ function colorArray(arr, indent = 1) {
 function getLine(code, type, value, options = Object.create(null)) {
     const { key, indent = 1, comma } = options;
     switch (type) {
-        case "object": value = "{"; break;
-        case "array": value = "["; break;
+        case "object":
+            value = "{";
+            break;
+        case "array":
+            value = "[";
+            break;
         default:
             if (comma === true) {
                 value += ",";
             }
     }
 
-    let str = "";
-    if (key === undefined) {
-        str = `${" ".repeat(indent * INDENT)}${value}`;
-    }
-    else {
-        str = `${" ".repeat(indent * INDENT)}${key}: ${value}`;
-    }
+    const str = typeof key === "undefined" ?
+        `${" ".repeat(indent * INDENT)}${value}` :
+        `${" ".repeat(indent * INDENT)}${key}: ${value}`;
     switch (code) {
-        case 1: console.log(green(`+${str.slice(1)}`)); break;
-        case -1: console.log(red(`-${str.slice(1)}`)); break;
+        case 1:
+            console.log(green(`+${str.slice(1)}`));
+            break;
+        case -1:
+            console.log(red(`-${str.slice(1)}`));
+            break;
         default: console.log(str);
     }
 }

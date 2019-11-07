@@ -1,5 +1,6 @@
 "use strict";
 
+// Require Internal Dependencies
 const colorObj = require("./src/color.js");
 
 /**
