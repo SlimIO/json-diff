@@ -40,8 +40,13 @@ It will produce the following stdout:
 
 ## API
 
-### jsonDiff(original: object, diff: object): void
-Stdout the difference between two JSON Object.
+### jsonDiff(original: object, diff: object, options?: Options): void
+Stdout the difference between two JSON Object. Available options is described by the following TypeScript interface
+```ts
+interface Options {
+    color?: boolean;
+}
+```
 
 ## Dependencies
 
