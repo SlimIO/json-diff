@@ -1,6 +1,6 @@
 {
     "name": "@slimio/json-diff",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Stdout difference from two JS Objects in the TTY",
     "main": "index.js",
     "scripts": {
