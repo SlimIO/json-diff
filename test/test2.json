@@ -11,6 +11,9 @@
         "fizz": "buzz",
         "bof": 10
     },
+    "number7": {
+        "test": true
+    },
     "arr": [
         "x", "y", "w"
     ]

@@ -1,11 +1,10 @@
 "use strict";
 
 // Require Third-party Dependencies
-const { red, green } = require("kleur");
+const { red, green, grey } = require("kleur");
 
 // CONSTANTS
 const INDENT = 4;
-
 /**
  * @function colorObj
  * @param {object} obj obj
@@ -14,22 +13,51 @@ const INDENT = 4;
  */
 function colorObj(obj, indent = 1) {
     if (indent === 1) {
-        console.log("{");
+        console.log(grey().bold("{"));
     }
     const [lastKey] = Object.entries(obj).pop();
     for (const [key, { code, type, value }] of Object.entries(obj)) {
         // console.log(lastKey);
         const comma = key !== lastKey;
         switch (type) {
-            case "object":
+            case "object": {
                 getLine(code, type, value, { key, indent, comma });
-                colorObj(value, indent + 1);
-                console.log(`${" ".repeat(indent * INDENT)}}${comma ? "," : ""}`);
+                if (code === 0) {
+                    colorObj(value, indent + 1);
+                    console.log(grey().bold(`${" ".repeat(indent * INDENT)}}${comma ? "," : ""}`));
+                    break;
+                }
+
+                const split = JSON.stringify(value, null, INDENT).split("\n");
+                split.shift();
+
+                let colorFn;
+                let sign;
+                switch (code) {
+                    case 1:
+                        colorFn = green;
+                        sign = "+";
+                        break;
+                    case -1:
+                        colorFn = red;
+                        sign = "-";
+                        break;
+                }
+                for (const [index, line] of split.entries()) {
+                    // console.log("LINE:" + line);
+                    if (index === split.length - 1) {
+                        console.log(colorFn(`${sign}${" ".repeat(indent * INDENT).slice(1)}${line}${comma ? "," : ""}`));
+                        continue;
+                    }
+                    console.log(colorFn(`${sign}${" ".repeat(indent * INDENT).slice(1)}${line}`));
+                }
+
                 break;
+            }
             case "array":
                 getLine(code, type, value, { key, indent, comma });
                 colorArray(value, indent + 1);
-                console.log(`${" ".repeat(indent * INDENT)}]${comma ? "," : ""}`);
+                console.log(grey().bold(`${" ".repeat(indent * INDENT)}]${comma ? "," : ""}`));
                 break;
             default:
                 if (typeof type === "object") {
@@ -47,7 +75,7 @@ function colorObj(obj, indent = 1) {
         }
     }
     if (indent === 1) {
-        console.log("}");
+        console.log(grey().bold("}"));
     }
 }
 
@@ -74,19 +102,30 @@ function colorArray(arr, indent = 1) {
 /* eslint-disable-next-line */
 function getLine(code, type, value, options = Object.create(null)) {
     const { key, indent = 1, comma } = options;
+
+    let colorFunc;
+
+    let newVal;
     switch (type) {
         case "object":
+<<<<<<< HEAD
             value = "{";
             break;
         case "array":
             value = "[";
+=======
+            newVal = "{";
+            break;
+        case "array":
+            newVal = "[";
+>>>>>>> chore: removed or new object is correctly stdout
             break;
         default:
-            if (comma === true) {
-                value += ",";
-            }
+            newVal = comma === true ? `${value},` : value;
+            // value += ",";
     }
 
+<<<<<<< HEAD
     const str = typeof key === "undefined" ?
         `${" ".repeat(indent * INDENT)}${value}` :
         `${" ".repeat(indent * INDENT)}${key}: ${value}`;
@@ -98,6 +137,19 @@ function getLine(code, type, value, options = Object.create(null)) {
             console.log(red(`-${str.slice(1)}`));
             break;
         default: console.log(str);
+=======
+    let str = "";
+    if (key === undefined) {
+        str = `${" ".repeat(indent * INDENT)}${newVal}`;
+    }
+    else {
+        str = `${" ".repeat(indent * INDENT)}${key}: ${newVal}`;
+    }
+    switch (code) {
+        case 1: console.log(green(`+${str.slice(1)}`)); break;
+        case -1: console.log(red(`-${str.slice(1)}`)); break;
+        default: console.log(grey().bold(str));
+>>>>>>> chore: removed or new object is correctly stdout
     }
 }
 

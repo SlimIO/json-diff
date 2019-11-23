@@ -8,6 +8,9 @@
         "fizz": "buzz",
         "baz": "biz"
     },
+    "number6": {
+        "test": true
+    },
     "arr": [
         "x", "y", "z"
     ]
