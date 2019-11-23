@@ -108,48 +108,23 @@ function getLine(code, type, value, options = Object.create(null)) {
     let newVal;
     switch (type) {
         case "object":
-<<<<<<< HEAD
-            value = "{";
-            break;
-        case "array":
-            value = "[";
-=======
             newVal = "{";
             break;
         case "array":
             newVal = "[";
->>>>>>> chore: removed or new object is correctly stdout
             break;
         default:
             newVal = comma === true ? `${value},` : value;
             // value += ",";
     }
 
-<<<<<<< HEAD
     const str = typeof key === "undefined" ?
         `${" ".repeat(indent * INDENT)}${value}` :
         `${" ".repeat(indent * INDENT)}${key}: ${value}`;
     switch (code) {
-        case 1:
-            console.log(green(`+${str.slice(1)}`));
-            break;
-        case -1:
-            console.log(red(`-${str.slice(1)}`));
-            break;
-        default: console.log(str);
-=======
-    let str = "";
-    if (key === undefined) {
-        str = `${" ".repeat(indent * INDENT)}${newVal}`;
-    }
-    else {
-        str = `${" ".repeat(indent * INDENT)}${key}: ${newVal}`;
-    }
-    switch (code) {
         case 1: console.log(green(`+${str.slice(1)}`)); break;
         case -1: console.log(red(`-${str.slice(1)}`)); break;
         default: console.log(grey().bold(str));
->>>>>>> chore: removed or new object is correctly stdout
     }
 }
 
