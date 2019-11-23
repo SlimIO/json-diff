@@ -119,8 +119,8 @@ function getLine(code, type, value, options = Object.create(null)) {
     }
 
     const str = typeof key === "undefined" ?
-        `${" ".repeat(indent * INDENT)}${value}` :
-        `${" ".repeat(indent * INDENT)}${key}: ${value}`;
+        `${" ".repeat(indent * INDENT)}${newVal}` :
+        `${" ".repeat(indent * INDENT)}${key}: ${newVal}`;
     switch (code) {
         case 1: console.log(green(`+${str.slice(1)}`)); break;
         case -1: console.log(red(`-${str.slice(1)}`)); break;
