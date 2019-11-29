@@ -19,8 +19,8 @@ function colorObj(obj, indent = 1) {
 
     const [lastKey] = Object.entries(obj).pop();
     for (const [key, { code, type, value }] of Object.entries(obj)) {
-        // console.log(lastKey);
         const comma = key !== lastKey;
+
         switch (type) {
             case "object": {
                 getLine(code, type, value, { key, indent, comma });
@@ -33,34 +33,26 @@ function colorObj(obj, indent = 1) {
                 const split = JSON.stringify(value, null, INDENT).split("\n");
                 split.shift();
 
-                let colorFn;
-                let sign;
-                switch (code) {
-                    case 1:
-                        colorFn = green;
-                        sign = "+";
-                        break;
-                    case -1:
-                        colorFn = red;
-                        sign = "-";
-                        break;
-                }
+                const colorFn = code === 1 ? green : red;
+                const sign = code === 1 ? "+" : "-";
                 for (const [index, line] of split.entries()) {
-                    // console.log("LINE:" + line);
                     if (index === split.length - 1) {
                         console.log(colorFn(`${sign}${" ".repeat(indent * INDENT).slice(1)}${line}${comma ? "," : ""}`));
-                        continue;
                     }
-                    console.log(colorFn(`${sign}${" ".repeat(indent * INDENT).slice(1)}${line}`));
+                    else {
+                        console.log(colorFn(`${sign}${" ".repeat(indent * INDENT).slice(1)}${line}`));
+                    }
                 }
 
                 break;
             }
+
             case "array":
                 getLine(code, type, value, { key, indent, comma });
                 colorArray(value, indent + 1);
                 console.log(grey().bold(`${" ".repeat(indent * INDENT)}]${comma ? "," : ""}`));
                 break;
+
             default:
                 if (typeof type === "object") {
                     // TBC
@@ -76,6 +68,7 @@ function colorObj(obj, indent = 1) {
                 getLine(code, type, value, { key, indent, comma });
         }
     }
+
     if (indent === 1) {
         console.log(grey().bold("}"));
     }
@@ -84,7 +77,8 @@ function colorObj(obj, indent = 1) {
 /**
  * @function colorArray
  * @param {Array} arr arr
- * @param {number} indent indent
+ * @param {number} [indent=1] indent
+ * @returns {void}
  */
 function colorArray(arr, indent = 1) {
     for (const [id, { code, type, value }] of arr.entries()) {
@@ -99,13 +93,13 @@ function colorArray(arr, indent = 1) {
  * @param {number} code code
  * @param {string} type type
  * @param {any} value value
+ * @returns {void}
  */
-/* eslint-disable no-param-reassign */
 /* eslint-disable-next-line */
 function getLine(code, type, value, options = Object.create(null)) {
     const { key, indent = 1, comma } = options;
 
-    let newVal;
+    let newVal = "";
     switch (type) {
         case "object":
             newVal = "{";
@@ -115,7 +109,6 @@ function getLine(code, type, value, options = Object.create(null)) {
             break;
         default:
             newVal = comma === true ? `${value},` : value;
-            // value += ",";
     }
 
     const str = typeof key === "undefined" ?
