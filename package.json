@@ -33,7 +33,9 @@
     },
     "homepage": "https://github.com/SlimIO/json-diff#readme",
     "dependencies": {
-        "kleur": "^3.0.3"
+        "@slimio/is": "^1.5.1",
+        "kleur": "^3.0.3",
+        "lodash.clonedeep": "^4.5.0"
     },
     "devDependencies": {
         "@commitlint/cli": "^8.2.0",

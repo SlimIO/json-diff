@@ -5,6 +5,7 @@ const { red, green, grey } = require("kleur");
 
 // CONSTANTS
 const INDENT = 4;
+
 /**
  * @function colorObj
  * @param {object} obj obj
@@ -15,6 +16,7 @@ function colorObj(obj, indent = 1) {
     if (indent === 1) {
         console.log(grey().bold("{"));
     }
+
     const [lastKey] = Object.entries(obj).pop();
     for (const [key, { code, type, value }] of Object.entries(obj)) {
         // console.log(lastKey);
@@ -103,8 +105,6 @@ function colorArray(arr, indent = 1) {
 function getLine(code, type, value, options = Object.create(null)) {
     const { key, indent = 1, comma } = options;
 
-    let colorFunc;
-
     let newVal;
     switch (type) {
         case "object":
@@ -121,6 +121,7 @@ function getLine(code, type, value, options = Object.create(null)) {
     const str = typeof key === "undefined" ?
         `${" ".repeat(indent * INDENT)}${newVal}` :
         `${" ".repeat(indent * INDENT)}${key}: ${newVal}`;
+
     switch (code) {
         case 1: console.log(green(`+${str.slice(1)}`)); break;
         case -1: console.log(red(`-${str.slice(1)}`)); break;
