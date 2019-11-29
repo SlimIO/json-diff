@@ -22,7 +22,7 @@ declare namespace JSONDiff {
     }
 }
 
-declare function JSONDiff(objA: object, objB: object, options?: JSONDiff.Options): void | object;
+declare function JSONDiff(objA: object, objB: object, options?: JSONDiff.Options): object;
 
 export = JSONDiff;
 export as namespace JSONDiff;

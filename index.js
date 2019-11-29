@@ -14,7 +14,7 @@ const { oldNew, diffValue } = require("./src/utils");
  * @param {string} diff diff JSON
  * @param {object} options options
  * @param {boolean} [options.color=true] stdout JSON in the TTY with colors
- * @returns {object|void}
+ * @returns {object}
  *
  * @throws {TypeError}
  */
@@ -27,8 +27,11 @@ function jsonDiff(original, diff, options = Object.create(null)) {
     }
 
     const result = objDiff(clonedeep(original), clonedeep(diff));
+    if (options.color) {
+        colorObj(result);
+    }
 
-    return options.color ? colorObj(result) : { type: "object", result };
+    return { type: "object", result };
 }
 
 /**
