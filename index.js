@@ -17,6 +17,7 @@ const { oldNew, diffValue } = require("./src/utils");
  * @returns {object}
  *
  * @throws {TypeError}
+ * @throws {Error}
  */
 function jsonDiff(original, diff, options = Object.create(null)) {
     if (!is.object(original)) {
@@ -26,12 +27,18 @@ function jsonDiff(original, diff, options = Object.create(null)) {
         throw new TypeError("diff must be a JavaScript object");
     }
 
-    const result = objDiff(clonedeep(original), clonedeep(diff));
+    const originalType = is.utils.getObjectType(original);
+    if (originalType !== is.utils.getObjectType(diff)) {
+        throw new Error("original and diff must inherit of the same object prototype");
+    }
+
+    const isObject = originalType === "Object";
+    const result = (isObject ? objDiff : arrayDiff)(clonedeep(original), clonedeep(diff));
     if (options.color) {
         colorObj(result);
     }
 
-    return { type: "object", result };
+    return { type: isObject ? "object" : "array", result };
 }
 
 /**
