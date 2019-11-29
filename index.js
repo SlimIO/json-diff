@@ -35,10 +35,9 @@ function jsonDiff(original, diff, options = Object.create(null)) {
  * @generator objDiff
  * @param {object} obj1 obj1
  * @param {object} obj2 obj2
- * @param {object} options options
  * @yields {object}
  */
-function* objDiff(obj1, obj2, options = Object.create(null)) {
+function* objDiff(obj1, obj2) {
     const obj1Keys = Object.keys(obj1);
     const obj2Keys = Object.keys(obj2);
 
@@ -90,10 +89,9 @@ function* objDiff(obj1, obj2, options = Object.create(null)) {
  * @function primitiveDiff
  * @param {number|string|boolean} primitive1 primitive1
  * @param {number|string|boolean} primitive2 primitive2
- * @param {object} options options
  * @returns {object}
  */
-function primitiveDiff(primitive1, primitive2, options = Object.create(null)) {
+function primitiveDiff(primitive1, primitive2) {
     if (primitive1 === primitive2) {
         return { code: 0, type: typeof primitive1, value: primitive1 };
     }
@@ -105,10 +103,9 @@ function primitiveDiff(primitive1, primitive2, options = Object.create(null)) {
  * @generator arrayDiff
  * @param {Array} arr1 arr1
  * @param {Array} arr2 arr2
- * @param {object} options options
  * @yields {object}
  */
-function* arrayDiff(arr1, arr2, options = Object.create(null)) {
+function* arrayDiff(arr1, arr2) {
     for (const item of arr1) {
         if (arr2.includes(item)) {
             yield { code: 0, type: typeof item, value: item };
