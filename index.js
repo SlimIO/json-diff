@@ -110,7 +110,7 @@ function arrayDiff(arrLeft, arrRight) {
 
     for (const item of arrLeft) {
         const itemIndex = rightArrCopy.indexOf(item);
-        result.push(diffValue(item), itemIndex === -1 ? -1 : 1);
+        result.push(diffValue(item, itemIndex === -1 ? -1 : 1));
 
         if (itemIndex !== -1) {
             rightArrCopy.splice(itemIndex, 1);
