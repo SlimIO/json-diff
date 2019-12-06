@@ -5,6 +5,7 @@
 ![size](https://img.shields.io/bundlephobia/min/@slimio/json-diff)
 ![dep](https://img.shields.io/david/SlimIO/json-diff)
 ![known vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/SlimIO/json-diff)
+[![Build Status](https://travis-ci.com/SlimIO/json-diff.svg?branch=master)](https://travis-ci.com/SlimIO/json-diff)
 
 Differentiates JSON in you terminal with color.
 
