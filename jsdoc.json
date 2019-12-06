@@ -8,7 +8,8 @@
     "source": {
         "include": [
             "index.js",
-            "src/color.js"
+            "src/color.js",
+            "src/utils.js"
         ],
         "exclude": [
             "node_modules",
