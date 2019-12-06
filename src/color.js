@@ -1,6 +1,7 @@
 "use strict";
 
 // Require Third-party Dependencies
+const is = require("@slimio/is");
 const { red, green, grey } = require("kleur");
 
 // CONSTANTS
@@ -13,12 +14,19 @@ const INDENT = 4;
  * @returns {void}
  */
 function colorObj(obj, indent = 1) {
+    if (is.array(obj)) {
+        colorArray(obj, indent);
+
+        return;
+    }
+
     if (indent === 1) {
         console.log(grey().bold("{"));
     }
 
-    const [lastKey] = Object.entries(obj).pop();
-    for (const [key, { code, type, value }] of Object.entries(obj)) {
+    const objEntries = Object.entries(obj);
+    const [lastKey] = objEntries[objEntries.length - 1];
+    for (const [key, { code, type, value }] of objEntries) {
         const comma = key !== lastKey;
 
         switch (type) {
