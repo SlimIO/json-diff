@@ -7,8 +7,8 @@
         "start": "node index.js",
         "prepublishOnly": "pkg-ok",
         "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose",
-        "test": "cross-env psp && ava --verbose",
-        "coverage": "nyc npm test",
+        "test": "cross-env psp && nyc --reporter=lcov ava --verbose",
+        "coverage": "codecov",
         "report": "nyc report --reporter=html"
     },
     "repository": {
@@ -44,6 +44,7 @@
         "@slimio/eslint-config": "^4.1.0",
         "@slimio/psp": "^0.11.1",
         "ava": "^3.8.2",
+        "codecov": "^3.7.0",
         "cross-env": "^7.0.2",
         "eslint": "^7.0.0",
         "husky": "^4.2.5",
@@ -63,9 +64,9 @@
     "nyc": {
         "check-coverage": true,
         "per-file": false,
-        "lines": 98,
-        "statements": 98,
-        "functions": 98,
-        "branches": 90
+        "lines": 0,
+        "statements": 0,
+        "functions": 0,
+        "branches": 0
     }
 }
